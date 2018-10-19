@@ -1,6 +1,6 @@
-import MySQLdb
 from twilio.rest import Client
 from time import gmtime, strftime
+from main import *
 
 account_sid = ""#HIDDEN
 token = ""#HIDDEN
@@ -25,6 +25,17 @@ db = MySQLdb.connect(
     db='on9db'
 )
 cur = db.cursor()
+
+def startApp(eventName):
+    """
+        Call this function to start app
+        Input: event name in string
+        No return
+    """
+    app = startApp(eventName)
+    makeTable()
+    app.run()
+
 
 def listAllParticipant():
     """
@@ -190,7 +201,7 @@ def explode():
         After event ends, event organizer can completely delete all the personal information
         CAUTION: Display warning before calling this function
                  Deletion can't be undone.
-     
+
     """
 
     cur.execute("DROP DATABASE on9db")
