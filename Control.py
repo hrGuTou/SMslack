@@ -11,7 +11,7 @@ client = Client(account_sid,token)
     Future updates possible
     You need to create the table header corresponding to the format
     
-
+    #NOT FULLY TESTED
     
     Set up MYSQL on localhost
     Don't use root user, create your own
