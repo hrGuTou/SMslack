@@ -1,5 +1,5 @@
 # SMslack
-This project used MYSQL database and Twilio sms API to build a platform mainly for event organizers to send out notifications and announcement via SMS.
+This project used MYSQL database and Twilio sms API to build a platform mainly for event organizers to send out notifications and announcements via SMS.
 
 # Environment Setup
 Install MYSQL for database management.
