@@ -183,3 +183,15 @@ def sendAnnouncement(message):
     val = (sentTime, message)
     cur.execute(sql,val)
     db.commit()
+
+
+def explode():
+    """
+        After event ends, event organizer can completely delete all the personal information
+        CAUTION: Display warning before calling this function
+                 Deletion can't be undone.
+     
+    """
+
+    cur.execute("DROP DATABASE on9db")
+    db.commit()
