@@ -101,8 +101,3 @@ def insINFO(data):
         return None
 
 
-cur.execute("SELECT PhoneNumber FROM Participant WHERE Name = 'Haoran';")
-
-myresult = str(cur.fetchone()[0])
-
-print(myresult)

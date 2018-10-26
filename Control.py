@@ -99,8 +99,6 @@ def assignProjectDue():
 
     cur.execute("UPDATE Project SET ProjectDue = "+time+" WHERE ProjectName = "+name+"; ")
 
-def dueNotification():
-    """TODO: PLACEHOLDER"""
 
 def sendPM(message,participantList):
     """

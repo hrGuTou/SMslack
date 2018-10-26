@@ -51,10 +51,12 @@ def startApp(eventName):
 
     return app
 
-
-# if __name__ == '__main__':
 listofNum = []
-# eventName = input("Event Name: ")
-# app = startApp()
-# makeTable()
-# app.run()
+
+
+#if __name__ == '__main__':
+#    listofNum = []
+#    eventName = input("Event Name: ")
+#    app = startApp(eventName)
+#    makeTable()
+#    app.run()
