@@ -1,10 +1,11 @@
 from twilio.rest import Client
-from time import gmtime, strftime
+from time import strftime, localtime
 from main import *
 
-account_sid = ""#HIDDEN
-token = ""#HIDDEN
+account_sid = "AC6518969ac0d71c98384e59b96e7815c4"#HIDDEN
+token = "10b052cda2c8df17c0c2d705ee4ec0b2"#HIDDEN
 client = Client(account_sid,token)
+f = '%Y-%m-%d %H:%M:%S'
 
 """
     GUI for event organizers will be based on these functions
@@ -135,7 +136,7 @@ def sendPM(message,participantList):
             to=number
         )
 
-    sentTime = strftime("%Y-%m-%d %H:%M:%S", gmtime())
+    sentTime = strftime("%Y-%m-%d %H:%M:%S", localtime())
 
     for name in participantList:
         sql = "INSERT INTO PrivateMsg(SentToPerson, SentTime, Message) VALUES (%s,%s,%s);"
@@ -167,7 +168,7 @@ def sendGM(message,teamName):
             to = number
         )
 
-    sentTime = strftime("%Y-%m-%d %H:%M:%S", gmtime())
+    sentTime = strftime("%Y-%m-%d %H:%M:%S", localtime())
 
     sql = "INSERT INTO GroupMsg(SentToTeam, SentTime, Message) VALUES (%s,%s,%s);"
     val = (teamName,sentTime, message)
@@ -194,14 +195,70 @@ def sendAnnouncement(message):
             to = number
         )
 
-    sentTime = strftime("%Y-%m-%d %H:%M:%S", gmtime())
+    sentTime = strftime("%Y-%m-%d %H:%M:%S", localtime())
 
     sql = "INSERT INTO Announcement(SentTime, Message) VALUES (%s,%s);"
     val = (sentTime, message)
     cur.execute(sql,val)
     db.commit()
 
+def pmHistory():
+    """
+        No input
 
+        :return: A list of lists of all private messages.
+                Format will be [Name, Sent Time, Message]
+
+    """
+
+    cur.execute("select SentToPerson, SentTime, Message from PrivateMsg;")
+    result = []
+    for row in cur.fetchall():
+        result.append(list(row))
+
+    for data in result:
+        date = data[1]
+        data[1]=date.strftime(f)
+
+    return result
+
+def gmHistory():
+    """
+    No input
+
+    :return: A list of lists of all group messages.
+            Format will be [Team Name, Sent Time, Message]
+
+    """
+    cur.execute("select SentToTeam, SentTime, Message from GroupMsg;")
+    result = []
+    for row in cur.fetchall():
+        result.append(list(row))
+
+    for data in result:
+        date = data[1]
+        data[1] = date.strftime(f)
+
+    return result
+
+def amHistory():
+    """
+        No input
+
+        :return: A list of lists of all announcement messages.
+                Format will be [Sent Time, Message]
+
+    """
+    cur.execute("SELECT SentTime, Message FROM Announcement;")
+    result = []
+    for row in cur.fetchall():
+        result.append(list(row))
+
+    for data in result:
+        date = data[0]
+        data[0]=date.strftime(f)
+
+    return result
 
 def explode():
     """
@@ -213,6 +270,5 @@ def explode():
 
     cur.execute("DROP DATABASE on9db")
     db.commit()
-
 
 
