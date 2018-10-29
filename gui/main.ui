@@ -15,7 +15,7 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
-    <item row="0" column="0" colspan="4">
+    <item row="1" column="0" colspan="4">
      <widget class="QTableWidget" name="tableWidget">
       <property name="wordWrap">
        <bool>true</bool>
@@ -91,31 +91,38 @@
       </column>
      </widget>
     </item>
-    <item row="1" column="0">
+    <item row="3" column="0">
      <widget class="QPushButton" name="endEvent">
       <property name="text">
        <string>End Event</string>
       </property>
      </widget>
     </item>
-    <item row="1" column="1">
+    <item row="3" column="1">
      <widget class="QPushButton" name="announcement">
       <property name="text">
        <string>Announcement</string>
       </property>
      </widget>
     </item>
-    <item row="1" column="2">
+    <item row="3" column="2">
      <widget class="QPushButton" name="gMessage">
       <property name="text">
        <string>Group Message</string>
       </property>
      </widget>
     </item>
-    <item row="1" column="3">
+    <item row="3" column="3">
      <widget class="QPushButton" name="pMessage">
       <property name="text">
        <string>Personal Message</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="0">
+     <widget class="QPushButton" name="refresh">
+      <property name="text">
+       <string>Refresh</string>
       </property>
      </widget>
     </item>

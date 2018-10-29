@@ -45,19 +45,22 @@ class Ui_MainWindow(object):
         self.tableWidget.horizontalHeader().setSortIndicatorShown(True)
         self.tableWidget.horizontalHeader().setStretchLastSection(True)
         self.tableWidget.verticalHeader().setStretchLastSection(False)
-        self.gridLayout.addWidget(self.tableWidget, 0, 0, 1, 4)
+        self.gridLayout.addWidget(self.tableWidget, 1, 0, 1, 4)
         self.endEvent = QtWidgets.QPushButton(self.centralwidget)
         self.endEvent.setObjectName("endEvent")
-        self.gridLayout.addWidget(self.endEvent, 1, 0, 1, 1)
+        self.gridLayout.addWidget(self.endEvent, 3, 0, 1, 1)
         self.announcement = QtWidgets.QPushButton(self.centralwidget)
         self.announcement.setObjectName("announcement")
-        self.gridLayout.addWidget(self.announcement, 1, 1, 1, 1)
+        self.gridLayout.addWidget(self.announcement, 3, 1, 1, 1)
         self.gMessage = QtWidgets.QPushButton(self.centralwidget)
         self.gMessage.setObjectName("gMessage")
-        self.gridLayout.addWidget(self.gMessage, 1, 2, 1, 1)
+        self.gridLayout.addWidget(self.gMessage, 3, 2, 1, 1)
         self.pMessage = QtWidgets.QPushButton(self.centralwidget)
         self.pMessage.setObjectName("pMessage")
-        self.gridLayout.addWidget(self.pMessage, 1, 3, 1, 1)
+        self.gridLayout.addWidget(self.pMessage, 3, 3, 1, 1)
+        self.refresh = QtWidgets.QPushButton(self.centralwidget)
+        self.refresh.setObjectName("refresh")
+        self.gridLayout.addWidget(self.refresh, 0, 0, 1, 1)
         MainWindow.setCentralWidget(self.centralwidget)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
         self.statusbar.setObjectName("statusbar")
@@ -85,8 +88,9 @@ class Ui_MainWindow(object):
         self.announcement.setText(_translate("MainWindow", "Announcement"))
         self.gMessage.setText(_translate("MainWindow", "Group Message"))
         self.pMessage.setText(_translate("MainWindow", "Personal Message"))
+        self.refresh.setText(_translate("MainWindow", "Refresh"))
 
-"""
+
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
@@ -96,4 +100,3 @@ if __name__ == "__main__":
     MainWindow.show()
     sys.exit(app.exec_())
 
-"""
