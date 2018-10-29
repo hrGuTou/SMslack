@@ -11,7 +11,11 @@ client = Client(account_sid,token)
     Future updates possible
     You need to create the table header corresponding to the format
     
-    #NOT FULLY TESTED
+    #ALL FUNCTIONS CHECKED EXCEPT Announcement()
+    #WILL BE TESTED
+    #CORRECTIONS MADE
+    
+    TODO: add msg history
     
     Set up MYSQL on localhost
     Don't use root user, create your own
@@ -26,7 +30,7 @@ db = MySQLdb.connect(
 )
 cur = db.cursor()
 
-def startApp(eventName):
+def start(eventName):
     """
         Call this function to start app
         Input: event name in string
@@ -40,11 +44,16 @@ def startApp(eventName):
 def listAllParticipant():
     """
         ALL DATA UNSORTED
-        This function return a list of all participants
-        Format will be {Name, Email, PhoneNumber, Sex, TeamName, ProjectName}
+        This function return the list of lists of all participants
+        Format will be [Name, Email, PhoneNumber, Sex, TeamName, ProjectName]
     """
-    cur.execute("SELECT Name,Email,PhoneNumber,Sex,TeamName,ProjectName FROM Participant,Team,Project;")
-    return [item[0] for item in cur.fetchall()]
+    cur.execute("Select Name,Email,PhoneNumber,Sex,TeamName,ProjectName from Participant natural join Team "
+                "natural join Project;")
+    result = []
+    for row in cur.fetchall():
+        result.append(list(row))
+
+    return result
 
 def names():
     """
@@ -82,7 +91,7 @@ def listAllProject():
     cur.execute("SELECT ProjectName,ProjectStatus,ProjectDue FROM Project")
     return [item[0] for item in cur.fetchall()]
 
-def assignProjectDue():
+def assignProjectDue(time, projectname):
     """
         To be used by event organizers.
 
@@ -94,10 +103,9 @@ def assignProjectDue():
         #TODO: check input
     """
 
-    time = input("Due date: ")
-    name = input("Project Name:")
 
-    cur.execute("UPDATE Project SET ProjectDue = "+time+" WHERE ProjectName = "+name+"; ")
+    cur.execute("UPDATE Project SET ProjectDue = '"+time+"' WHERE ProjectName = '"+projectname+"'; ")
+    db.commit()
 
 
 def sendPM(message,participantList):
@@ -116,7 +124,7 @@ def sendPM(message,participantList):
     """
     numberTO = []
     for name in participantList:
-        cur.execute("SELECT PhoneNumber FROM Participant WHERE Name="+name+";")
+        cur.execute("SELECT PhoneNumber FROM Participant WHERE Name='"+name+"';")
         phoneNum = str(cur.fetchone()[0])
         numberTO.append(phoneNum)
 
@@ -130,8 +138,8 @@ def sendPM(message,participantList):
     sentTime = strftime("%Y-%m-%d %H:%M:%S", gmtime())
 
     for name in participantList:
-        sql = "INSERT INTO GroupMsg(SentToPerson, SentTime, Message) VALUES (%s,%s,%s);"
-        val = (name,sentTime, message)
+        sql = "INSERT INTO PrivateMsg(SentToPerson, SentTime, Message) VALUES (%s,%s,%s);"
+        val = (name, sentTime, message)
         cur.execute(sql, val)
         db.commit()
 
@@ -141,7 +149,7 @@ def sendGM(message,teamName):
     """
         Send message to one team's all members
 
-        Input:message, a team name
+        Input:message, a team name in string
 
             *You can use teams() to get all the team names, then use drop down list to choose send target
 
@@ -149,7 +157,7 @@ def sendGM(message,teamName):
         No return
     """
 
-    cur.execute("SELECT PhoneNumber FROM Team NATURAL JOIN Participant WHERE TeamName = "+teamName+";")
+    cur.execute("SELECT PhoneNumber FROM Team NATURAL JOIN Participant WHERE TeamName = '"+teamName+"';")
     allPhoneNumber = [item[0] for item in cur.fetchall()]
 
     for number in allPhoneNumber:
@@ -161,7 +169,7 @@ def sendGM(message,teamName):
 
     sentTime = strftime("%Y-%m-%d %H:%M:%S", gmtime())
 
-    sql = "INSERT INTO GroupMsg(SentToTime, SentTime, Message) VALUES (%s,%s,%s);"
+    sql = "INSERT INTO GroupMsg(SentToTeam, SentTime, Message) VALUES (%s,%s,%s);"
     val = (teamName,sentTime, message)
     cur.execute(sql, val)
     db.commit()
@@ -194,6 +202,7 @@ def sendAnnouncement(message):
     db.commit()
 
 
+
 def explode():
     """
         After event ends, event organizer can completely delete all the personal information
@@ -204,3 +213,6 @@ def explode():
 
     cur.execute("DROP DATABASE on9db")
     db.commit()
+
+
+

@@ -35,13 +35,13 @@ def makeTable():
                   "UNIQUE (ProjectName));"
 
         groupMsg = "CREATE TABLE IF NOT EXISTS GroupMsg(MsgID INT PRIMARY KEY AUTO_INCREMENT," \
-                   "SentToTeam INT NOT NULL," \
+                   "SentToTeam VARCHAR(320) NOT NULL," \
                    "SentTime TIMESTAMP NOT NULL," \
                    "Message TEXT NOT NULL," \
                    "FOREIGN KEY (SentToTeam) REFERENCES Team (TeamID))"
 
         privateMsg = "CREATE TABLE IF NOT EXISTS PrivateMsg(MsgID INT PRIMARY KEY AUTO_INCREMENT," \
-                     "SentToPerson INT NOT NULL," \
+                     "SentToPerson VARCHAR(320) NOT NULL," \
                      "SentTime TIMESTAMP NOT NULL," \
                      "Message TEXT NOT NULL," \
                      "FOREIGN KEY (SentToPerson) REFERENCES Participant (id))"
