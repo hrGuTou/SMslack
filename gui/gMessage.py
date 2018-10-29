@@ -44,7 +44,7 @@ class Ui_gMessage(object):
         self.label_2.setText(_translate("gMessage", "Select a team to send message:"))
         self.label.setText(_translate("gMessage", "Enter your message:"))
 
-
+"""
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
@@ -53,4 +53,4 @@ if __name__ == "__main__":
     ui.setupUi(gMessage)
     gMessage.show()
     sys.exit(app.exec_())
-
+"""

@@ -38,7 +38,7 @@ class Ui_Dialog(object):
         self.pushButton_2.setText(_translate("Dialog", "Message History"))
         self.label.setText(_translate("Dialog", "Send an announcement"))
 
-
+"""
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
@@ -48,3 +48,4 @@ if __name__ == "__main__":
     Dialog.show()
     sys.exit(app.exec_())
 
+"""

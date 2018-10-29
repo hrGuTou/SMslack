@@ -34,7 +34,7 @@ class Ui_Dialog(object):
         Dialog.setWindowTitle(_translate("Dialog", "End Event"))
         self.label.setText(_translate("Dialog", "Are you sure you want to Delete all the data for this event?"))
 
-
+"""
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
@@ -43,4 +43,4 @@ if __name__ == "__main__":
     ui.setupUi(Dialog)
     Dialog.show()
     sys.exit(app.exec_())
-
+"""

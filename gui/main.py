@@ -86,7 +86,7 @@ class Ui_MainWindow(object):
         self.gMessage.setText(_translate("MainWindow", "Group Message"))
         self.pMessage.setText(_translate("MainWindow", "Personal Message"))
 
-
+"""
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
@@ -96,3 +96,4 @@ if __name__ == "__main__":
     MainWindow.show()
     sys.exit(app.exec_())
 
+"""

@@ -35,7 +35,7 @@ class Ui_amHistory(object):
         item = self.tableWidget.horizontalHeaderItem(1)
         item.setText(_translate("amHistory", "Message"))
 
-
+"""
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
@@ -45,3 +45,4 @@ if __name__ == "__main__":
     amHistory.show()
     sys.exit(app.exec_())
 
+"""

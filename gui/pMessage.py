@@ -45,7 +45,7 @@ class Ui_pMessage(object):
         self.label.setText(_translate("pMessage", "Enter your message:"))
         self.label_2.setText(_translate("pMessage", "Select a person to send message:"))
 
-
+"""
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
@@ -54,4 +54,4 @@ if __name__ == "__main__":
     ui.setupUi(pMessage)
     pMessage.show()
     sys.exit(app.exec_())
-
+"""
