@@ -31,13 +31,13 @@ db = MySQLdb.connect(
 )
 cur = db.cursor()
 
-def start(eventName):
+def start():
     """
         Call this function to start app
         Input: event name in string
         No return
     """
-    app = startApp(eventName)
+    app = startApp()
     makeTable()
     app.run()
 

@@ -30,7 +30,7 @@ def greeting(res, eventName):
     return str(res)
 
 
-def startApp(eventName):
+def startApp():
     app = Flask(__name__)
 
     @app.route('/sms', methods=['POST'])
@@ -41,7 +41,7 @@ def startApp(eventName):
         response = MessagingResponse()
 
         if num not in listofNum:
-            res = greeting(response, eventName)
+            res = greeting(response, 'CS336')
             listofNum.append(num)
             return res
         else:
