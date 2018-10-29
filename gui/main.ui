@@ -14,140 +14,112 @@
    <string>Smslack</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QPushButton" name="endEvent">
-    <property name="geometry">
-     <rect>
-      <x>30</x>
-      <y>420</y>
-      <width>101</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>End Event</string>
-    </property>
-   </widget>
-   <widget class="QTableWidget" name="tableWidget">
-    <property name="geometry">
-     <rect>
-      <x>30</x>
-      <y>50</y>
-      <width>771</width>
-      <height>351</height>
-     </rect>
-    </property>
-    <property name="wordWrap">
-     <bool>true</bool>
-    </property>
-    <property name="rowCount">
-     <number>0</number>
-    </property>
-    <attribute name="horizontalHeaderVisible">
-     <bool>true</bool>
-    </attribute>
-    <attribute name="horizontalHeaderCascadingSectionResizes">
-     <bool>false</bool>
-    </attribute>
-    <attribute name="horizontalHeaderDefaultSectionSize">
-     <number>120</number>
-    </attribute>
-    <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
-     <bool>true</bool>
-    </attribute>
-    <attribute name="horizontalHeaderStretchLastSection">
-     <bool>true</bool>
-    </attribute>
-    <attribute name="verticalHeaderStretchLastSection">
-     <bool>false</bool>
-    </attribute>
-    <column>
-     <property name="text">
-      <string>Name</string>
-     </property>
-     <property name="textAlignment">
-      <set>AlignCenter</set>
-     </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>Email</string>
-     </property>
-     <property name="textAlignment">
-      <set>AlignCenter</set>
-     </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>Phone Number</string>
-     </property>
-     <property name="textAlignment">
-      <set>AlignCenter</set>
-     </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>Sex</string>
-     </property>
-     <property name="textAlignment">
-      <set>AlignCenter</set>
-     </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>Team Name</string>
-     </property>
-     <property name="textAlignment">
-      <set>AlignCenter</set>
-     </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>Project Name</string>
-     </property>
-     <property name="textAlignment">
-      <set>AlignCenter</set>
-     </property>
-    </column>
-   </widget>
-   <widget class="QPushButton" name="announcement">
-    <property name="geometry">
-     <rect>
-      <x>440</x>
-      <y>420</y>
-      <width>111</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Announcement</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="gMessage">
-    <property name="geometry">
-     <rect>
-      <x>550</x>
-      <y>420</y>
-      <width>121</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Group Message</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="pMessage">
-    <property name="geometry">
-     <rect>
-      <x>670</x>
-      <y>420</y>
-      <width>131</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Personal Message</string>
-    </property>
-   </widget>
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="0" column="0" colspan="4">
+     <widget class="QTableWidget" name="tableWidget">
+      <property name="wordWrap">
+       <bool>true</bool>
+      </property>
+      <property name="rowCount">
+       <number>0</number>
+      </property>
+      <attribute name="horizontalHeaderVisible">
+       <bool>true</bool>
+      </attribute>
+      <attribute name="horizontalHeaderCascadingSectionResizes">
+       <bool>false</bool>
+      </attribute>
+      <attribute name="horizontalHeaderDefaultSectionSize">
+       <number>120</number>
+      </attribute>
+      <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
+       <bool>true</bool>
+      </attribute>
+      <attribute name="horizontalHeaderStretchLastSection">
+       <bool>true</bool>
+      </attribute>
+      <attribute name="verticalHeaderStretchLastSection">
+       <bool>false</bool>
+      </attribute>
+      <column>
+       <property name="text">
+        <string>Name</string>
+       </property>
+       <property name="textAlignment">
+        <set>AlignCenter</set>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Email</string>
+       </property>
+       <property name="textAlignment">
+        <set>AlignCenter</set>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Phone Number</string>
+       </property>
+       <property name="textAlignment">
+        <set>AlignCenter</set>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Sex</string>
+       </property>
+       <property name="textAlignment">
+        <set>AlignCenter</set>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Team Name</string>
+       </property>
+       <property name="textAlignment">
+        <set>AlignCenter</set>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Project Name</string>
+       </property>
+       <property name="textAlignment">
+        <set>AlignCenter</set>
+       </property>
+      </column>
+     </widget>
+    </item>
+    <item row="1" column="0">
+     <widget class="QPushButton" name="endEvent">
+      <property name="text">
+       <string>End Event</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="1">
+     <widget class="QPushButton" name="announcement">
+      <property name="text">
+       <string>Announcement</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="2">
+     <widget class="QPushButton" name="gMessage">
+      <property name="text">
+       <string>Group Message</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="3">
+     <widget class="QPushButton" name="pMessage">
+      <property name="text">
+       <string>Personal Message</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
