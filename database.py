@@ -37,14 +37,14 @@ def makeTable():
         groupMsg = "CREATE TABLE IF NOT EXISTS GroupMsg(MsgID INT PRIMARY KEY AUTO_INCREMENT," \
                    "SentToTeam VARCHAR(320) NOT NULL," \
                    "SentTime TIMESTAMP NOT NULL," \
-                   "Message TEXT NOT NULL," \
-                   "FOREIGN KEY (SentToTeam) REFERENCES Team (TeamID))"
+                   "Message TEXT NOT NULL" \
+                   ")"
 
         privateMsg = "CREATE TABLE IF NOT EXISTS PrivateMsg(MsgID INT PRIMARY KEY AUTO_INCREMENT," \
                      "SentToPerson VARCHAR(320) NOT NULL," \
                      "SentTime TIMESTAMP NOT NULL," \
-                     "Message TEXT NOT NULL," \
-                     "FOREIGN KEY (SentToPerson) REFERENCES Participant (id))"
+                     "Message TEXT NOT NULL" \
+                     ")"
 
         announcement = "CREATE TABLE IF NOT EXISTS Announcement(MsgID INT PRIMARY KEY AUTO_INCREMENT," \
                        "SentTime TIMESTAMP NOT NULL," \
