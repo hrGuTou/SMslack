@@ -2,8 +2,8 @@ from twilio.rest import Client
 from time import strftime, localtime
 from main import *
 
-account_sid = "AC6518969ac0d71c98384e59b96e7815c4"#HIDDEN
-token = "10b052cda2c8df17c0c2d705ee4ec0b2"#HIDDEN
+account_sid = ""#HIDDEN
+token = ""#HIDDEN
 client = Client(account_sid,token)
 f = '%Y-%m-%d %H:%M:%S'
 
