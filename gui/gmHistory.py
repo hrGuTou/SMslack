@@ -7,6 +7,10 @@
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+import sys
+sys.path.append('../gui')
+import control
+
 
 class Ui_gmHistory(object):
     def setupUi(self, gmHistory):
@@ -29,6 +33,17 @@ class Ui_gmHistory(object):
         self.tableWidget.verticalHeader().setCascadingSectionResizes(False)
         self.tableWidget.verticalHeader().setStretchLastSection(False)
         self.gridLayout.addWidget(self.tableWidget, 0, 0, 1, 1)
+
+        """
+            add items to table
+        """
+        self.tableWidget.setRowCount(0)
+        result = control.gmHistory()
+        for i in range(len(result)):
+            numRows = self.tableWidget.rowCount()
+            self.tableWidget.insertRow(numRows)
+            for j in range(len(result[i])):
+                self.tableWidget.setItem(numRows, j, QtWidgets.QTableWidgetItem(result[i][j]))
 
         self.retranslateUi(gmHistory)
         QtCore.QMetaObject.connectSlotsByName(gmHistory)

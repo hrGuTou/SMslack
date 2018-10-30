@@ -7,6 +7,10 @@
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+import sys
+sys.path.append('../gui')
+import control
+
 
 class Ui_pmHistory(object):
     def setupUi(self, pmHistory):
@@ -26,6 +30,19 @@ class Ui_pmHistory(object):
         self.tableWidget.setHorizontalHeaderItem(2, item)
         self.tableWidget.horizontalHeader().setSortIndicatorShown(True)
         self.tableWidget.horizontalHeader().setStretchLastSection(True)
+
+        """
+            add items to table
+        """
+        self.tableWidget.setRowCount(0)
+        result = control.pmHistory()
+        for i in range(len(result)):
+            numRows = self.tableWidget.rowCount()
+            self.tableWidget.insertRow(numRows)
+            for j in range(len(result[i])):
+                self.tableWidget.setItem(numRows, j, QtWidgets.QTableWidgetItem(result[i][j]))
+
+
         self.gridLayout.addWidget(self.tableWidget, 0, 0, 1, 1)
 
         self.retranslateUi(pmHistory)
@@ -41,13 +58,14 @@ class Ui_pmHistory(object):
         item = self.tableWidget.horizontalHeaderItem(2)
         item.setText(_translate("pmHistory", "Message"))
 
+"""
+if __name__ == "__main__":
+     import sys
+     app = QtWidgets.QApplication(sys.argv)
+     pmHistory = QtWidgets.QDialog()
+     ui = Ui_pmHistory()
+     ui.setupUi(pmHistory)
+     pmHistory.show()
+     sys.exit(app.exec_())
 
-# if __name__ == "__main__":
-#     import sys
-#     app = QtWidgets.QApplication(sys.argv)
-#     pmHistory = QtWidgets.QDialog()
-#     ui = Ui_pmHistory()
-#     ui.setupUi(pmHistory)
-#     pmHistory.show()
-#     sys.exit(app.exec_())
-
+"""

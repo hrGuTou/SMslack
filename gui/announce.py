@@ -7,8 +7,11 @@
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+import sys
+sys.path.append('../gui')
 from amHistory import *
 # from control import *
+from control import sendAnnouncement
 
 
 class Ui_Announce(object):
@@ -44,9 +47,12 @@ class Ui_Announce(object):
         self.pushButton.setText(_translate("Dialog", "Send"))
         self.pushButton_2.setText(_translate("Dialog", "Message History"))
         self.label.setText(_translate("Dialog", "Send an announcement"))
+
     def clickedSend(self):
         msg=self.plainTextEdit.document().toPlainText()
-        # sendAnnouncement(msg)
+        sendAnnouncement(msg)
+
+
     def clickPmHistory(self):
         Dialog = QtWidgets.QDialog()
         ui = Ui_amHistory()
@@ -54,13 +60,14 @@ class Ui_Announce(object):
         Dialog.show()
         Dialog.exec_()
 
+"""
+if __name__ == "__main__":
+     import sys
+     app = QtWidgets.QApplication(sys.argv)
+     Dialog = QtWidgets.QDialog()
+     ui = Ui_Dialog()
+     ui.setupUi(Dialog)
+     Dialog.show()
+     sys.exit(app.exec_())
 
-# if __name__ == "__main__":
-#     import sys
-#     app = QtWidgets.QApplication(sys.argv)
-#     Dialog = QtWidgets.QDialog()
-#     ui = Ui_Dialog()
-#     ui.setupUi(Dialog)
-#     Dialog.show()
-#     sys.exit(app.exec_())
-
+"""

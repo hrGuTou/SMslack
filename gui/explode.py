@@ -7,7 +7,11 @@
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-# from control import *
+import sys
+sys.path.append('../gui')
+import control
+
+
 class Ui_Explode(object):
     def setupUi(self, Dialog):
         Dialog.setObjectName("Dialog")
@@ -35,9 +39,9 @@ class Ui_Explode(object):
         Dialog.setWindowTitle(_translate("Dialog", "End Event"))
         self.label.setText(_translate("Dialog", "Are you sure you want to Delete all the data for this event?"))
     def comfirmEnd(self):
-        pass
-        # control.explode()
+        control.explode()
 
+"""
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
@@ -46,3 +50,4 @@ if __name__ == "__main__":
     ui.setupUi(Dialog)
     Dialog.show()
     sys.exit(app.exec_())
+"""

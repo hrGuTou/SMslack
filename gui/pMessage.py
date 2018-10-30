@@ -8,7 +8,11 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 from pmHistory import *
-# from control import *
+import sys
+sys.path.append('../gui')
+import control
+
+
 class Ui_pMessage(object):
     def setupUi(self, pMessage):
         pMessage.setObjectName("pMessage")
@@ -30,6 +34,9 @@ class Ui_pMessage(object):
         self.gridLayout.addWidget(self.label, 2, 0, 1, 1)
         self.comboBox = QtWidgets.QComboBox(pMessage)
         self.comboBox.setObjectName("comboBox")
+        personName = control.names()
+        self.comboBox.addItems(personName)
+
         self.gridLayout.addWidget(self.comboBox, 1, 0, 1, 4)
         self.label_2 = QtWidgets.QLabel(pMessage)
         self.label_2.setObjectName("label_2")
@@ -55,7 +62,9 @@ class Ui_pMessage(object):
 
     def clickedSend(self):
         msg=self.plainTextEdit.document().toPlainText()
-        print(msg)
+        target = [str(self.comboBox.currentText())]
+        control.sendPM(msg,target)
+
 
     def clickedPmHistory(self):
         Dialog = QtWidgets.QDialog()
@@ -64,25 +73,15 @@ class Ui_pMessage(object):
         Dialog.show()
         Dialog.exec_()
 
-    # def listAllParticipant(self):
-    #     self.tableWidget.clear()
-    #     self.tableWidget.setRowCount(0)
-    #     result = listAllParticipant()
-
-    #     for i in range(len(result)):
-    #         numRows = self.tableWidget.rowCount()
-    #         self.tableWidget.insertRow(numRows)
-    #         for j in range(len(result[i])):
-    #             self.tableWidget.setItem(numRows, j, QtWidgets.QTableWidgetItem(result[i][j]))
-    # 需要改成combo box？
 
 
-# if __name__ == "__main__":
-#     import sys
-#     app = QtWidgets.QApplication(sys.argv)
-#     pMessage = QtWidgets.QDialog()
-#     ui = Ui_pMessage()
-#     ui.setupUi(pMessage)
-#     pMessage.show()
-#     sys.exit(app.exec_())
-
+"""
+if __name__ == "__main__":
+     import sys
+     app = QtWidgets.QApplication(sys.argv)
+     pMessage = QtWidgets.QDialog()
+     ui = Ui_pMessage()
+     ui.setupUi(pMessage)
+     pMessage.show()
+     sys.exit(app.exec_())
+"""

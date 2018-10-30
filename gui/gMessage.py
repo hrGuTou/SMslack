@@ -7,8 +7,11 @@
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+import sys
+sys.path.append('../gui')
 from gmHistory import *
-# from control import *
+import control
+
 
 class Ui_gMessage(object):
     def setupUi(self, gMessage):
@@ -27,6 +30,8 @@ class Ui_gMessage(object):
         self.gridLayout.addWidget(self.plainTextEdit, 4, 0, 1, 3)
         self.comboBox = QtWidgets.QComboBox(gMessage)
         self.comboBox.setObjectName("comboBox")
+        teamName = control.teams()
+        self.comboBox.addItems(teamName)
         self.gridLayout.addWidget(self.comboBox, 2, 0, 1, 3)
         self.label_2 = QtWidgets.QLabel(gMessage)
         self.label_2.setObjectName("label_2")
@@ -57,32 +62,21 @@ class Ui_gMessage(object):
         ui.setupUi(Dialog)
         Dialog.show()
         Dialog.exec_() 
+
     def clickedSend(self):
         msg=self.plainTextEdit.document().toPlainText()
-        print(msg)
-        # teamname=
-        # sendGM(msg,teamname)
-    # dropdownbox get teamname first
+        target = str(self.comboBox.currentText())
+        control.sendGM(msg, target)
 
-    # def listAllParticipant(self):
-    #     self.tableWidget.clear()
-    #     self.tableWidget.setRowCount(0)
-    #     result = listAllParticipant()
 
-    #     for i in range(len(result)):
-    #         numRows = self.tableWidget.rowCount()
-    #         self.tableWidget.insertRow(numRows)
-    #         for j in range(len(result[i])):
-    #             self.tableWidget.setItem(numRows, j, QtWidgets.QTableWidgetItem(result[i][j]))
-    # 这个要改成list all team?
-    # 也要加上
+"""
+if __name__ == "__main__":
+     import sys
+     app = QtWidgets.QApplication(sys.argv)
+     gMessage = QtWidgets.QDialog()
+     ui = Ui_gMessage()
+     ui.setupUi(gMessage)
+     gMessage.show()
+     sys.exit(app.exec_())
 
-# if __name__ == "__main__":
-#     import sys
-#     app = QtWidgets.QApplication(sys.argv)
-#     gMessage = QtWidgets.QDialog()
-#     ui = Ui_gMessage()
-#     ui.setupUi(gMessage)
-#     gMessage.show()
-#     sys.exit(app.exec_())
-
+"""

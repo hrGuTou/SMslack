@@ -1,26 +1,30 @@
-# -*- coding: utf-8 -*-
+"""
+        SMslack project created by on9 group
 
-# Form implementation generated from reading ui file 'main.ui'
-#
-# Created by: PyQt5 UI code generator 5.11.3
-#
-# WARNING! All changes made in this file will be lost!
+        Group members: Haoran He
+                       YanFeng Lin
+                       QiZhi Zhao
+
+        Course: CSC 336 Database
+
+        This project used MYSQL database and Twilio sms API to build
+        a platform mainly for event organizers to send out
+        notifications and announcements via SMS.
+
+        Backend sms receiver/listener using Flask and ngrok to expose localhost
+        then used it in Twilio sms webhook (POST requests).
+
+        Frontend used PYQT5 to create GUI
+
+        Database used MySQL
+
+"""
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtWidgets import QTableWidget
-import os
 import sys
-# from inspect import getsourcefile
-# current_path = os.path.abspath(getsourcefile(lambda:0))
-# current_dir = os.path.dirname(current_path)
-# parent_dir = current_dir[:current_dir.rfind(os.path.sep)]
+sys.path.append('../gui')
 
-# sys.path.insert(0, parent_dir)
-
-
-
-# sys.path.append('..')
-# from control import *
+from control import *
 
 from announce import Ui_Announce
 from explode import Ui_Explode
@@ -121,17 +125,19 @@ class Ui_MainWindow(object):
 
 
     def clickedRefresh(self):
-        self.tableWidget.clear()
-        self.tableWidget.setRowCount(0)
-        result = listAllParticipant()
-        # listAllParticipant()会有函数重复问题?这里def的最好改一下名字吧?
-        # 改成了clickedRefresh
+        print("hit")
+        try:
+            self.tableWidget.clearContents()
+            self.tableWidget.setRowCount(0)
+            result = listAllParticipant()
 
-        for i in range(len(result)):
-            numRows = self.tableWidget.rowCount()
-            self.tableWidget.insertRow(numRows)
-            for j in range(len(result[i])):
-                self.tableWidget.setItem(numRows, j, QtWidgets.QTableWidgetItem(result[i][j]))
+            for i in range(len(result)):
+                numRows = self.tableWidget.rowCount()
+                self.tableWidget.insertRow(numRows)
+                for j in range(len(result[i])):
+                    self.tableWidget.setItem(numRows, j, QtWidgets.QTableWidgetItem(result[i][j]))
+        except Exception as e:
+            print(e)
 
     def clickedAnnounce(self):
         Dialog = QtWidgets.QDialog()
@@ -148,6 +154,9 @@ class Ui_MainWindow(object):
         Dialog.exec_()
 
     def clickedgMessage(self):
+        """
+            Send Group Message
+        """
         gMessage = QtWidgets.QDialog()
         ui = Ui_gMessage()
         ui.setupUi(gMessage)
@@ -155,6 +164,10 @@ class Ui_MainWindow(object):
         gMessage.exec_()
 
     def clickedpMessage(self):
+        """
+            Send Private/Personal Message
+        """
+
         pMessage = QtWidgets.QDialog()
         ui = Ui_pMessage()
         ui.setupUi(pMessage)
@@ -173,6 +186,6 @@ def pyqt_function():
     sys.exit(app.exec_())
 
 if __name__ == "__main__":
-    # start()
+    start()
     pyqt_function()
 
