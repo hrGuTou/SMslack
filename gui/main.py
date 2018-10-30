@@ -7,6 +7,11 @@
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtWidgets import QTableWidget
+
+from control import *
+import sys
+
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -48,6 +53,7 @@ class Ui_MainWindow(object):
         self.gridLayout.addWidget(self.tableWidget, 1, 0, 1, 4)
         self.endEvent = QtWidgets.QPushButton(self.centralwidget)
         self.endEvent.setObjectName("endEvent")
+
         self.gridLayout.addWidget(self.endEvent, 3, 0, 1, 1)
         self.announcement = QtWidgets.QPushButton(self.centralwidget)
         self.announcement.setObjectName("announcement")
@@ -65,6 +71,9 @@ class Ui_MainWindow(object):
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
         self.statusbar.setObjectName("statusbar")
         MainWindow.setStatusBar(self.statusbar)
+
+        self.refresh.clicked.connect(self.listAllParticipant)
+        self.endEvent.clicked.connect(self.explode)
 
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
@@ -91,12 +100,28 @@ class Ui_MainWindow(object):
         self.refresh.setText(_translate("MainWindow", "Refresh"))
 
 
-if __name__ == "__main__":
-    import sys
+    def listAllParticipant(self):
+        self.tableWidget.clear()
+        self.tableWidget.setRowCount(0)
+        result = listAllParticipant()
+
+        for i in range(len(result)):
+            numRows = self.tableWidget.rowCount()
+            self.tableWidget.insertRow(numRows)
+            for j in range(len(result[i])):
+                self.tableWidget.setItem(numRows, j, QtWidgets.QTableWidgetItem(result[i][j]))
+
+
+
+def pyqt_function():
     app = QtWidgets.QApplication(sys.argv)
     MainWindow = QtWidgets.QMainWindow()
     ui = Ui_MainWindow()
     ui.setupUi(MainWindow)
     MainWindow.show()
     sys.exit(app.exec_())
+
+if __name__ == "__main__":
+    start()
+    pyqt_function()
 

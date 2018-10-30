@@ -8,6 +8,7 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
+
 class Ui_amHistory(object):
     def setupUi(self, amHistory):
         amHistory.setObjectName("amHistory")
