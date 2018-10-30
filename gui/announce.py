@@ -7,8 +7,11 @@
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from amHistory import *
+# from control import *
 
-class Ui_Dialog(object):
+
+class Ui_Announce(object):
     def setupUi(self, Dialog):
         Dialog.setObjectName("Dialog")
         Dialog.resize(442, 214)
@@ -30,6 +33,10 @@ class Ui_Dialog(object):
 
         self.retranslateUi(Dialog)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
+        # ui 接入
+        self.pushButton.clicked.connect(self.clickedSend)
+        self.pushButton_2.clicked.connect(self.clickPmHistory)
+
 
     def retranslateUi(self, Dialog):
         _translate = QtCore.QCoreApplication.translate
@@ -37,15 +44,23 @@ class Ui_Dialog(object):
         self.pushButton.setText(_translate("Dialog", "Send"))
         self.pushButton_2.setText(_translate("Dialog", "Message History"))
         self.label.setText(_translate("Dialog", "Send an announcement"))
+    def clickedSend(self):
+        msg=self.plainTextEdit.document().toPlainText()
+        # sendAnnouncement(msg)
+    def clickPmHistory(self):
+        Dialog = QtWidgets.QDialog()
+        ui = Ui_amHistory()
+        ui.setupUi(Dialog)
+        Dialog.show()
+        Dialog.exec_()
 
-"""
-if __name__ == "__main__":
-    import sys
-    app = QtWidgets.QApplication(sys.argv)
-    Dialog = QtWidgets.QDialog()
-    ui = Ui_Dialog()
-    ui.setupUi(Dialog)
-    Dialog.show()
-    sys.exit(app.exec_())
 
-"""
+# if __name__ == "__main__":
+#     import sys
+#     app = QtWidgets.QApplication(sys.argv)
+#     Dialog = QtWidgets.QDialog()
+#     ui = Ui_Dialog()
+#     ui.setupUi(Dialog)
+#     Dialog.show()
+#     sys.exit(app.exec_())
+

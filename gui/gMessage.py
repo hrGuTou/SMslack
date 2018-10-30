@@ -7,6 +7,8 @@
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from gmHistory import *
+# from control import *
 
 class Ui_gMessage(object):
     def setupUi(self, gMessage):
@@ -36,6 +38,11 @@ class Ui_gMessage(object):
         self.retranslateUi(gMessage)
         QtCore.QMetaObject.connectSlotsByName(gMessage)
 
+
+        # ui connect
+        self.pushButton.clicked.connect(self.clickedSend)
+        self.pushButton_2.clicked.connect(self.clickedGmHistory)
+
     def retranslateUi(self, gMessage):
         _translate = QtCore.QCoreApplication.translate
         gMessage.setWindowTitle(_translate("gMessage", "Group Message"))
@@ -44,13 +51,38 @@ class Ui_gMessage(object):
         self.label_2.setText(_translate("gMessage", "Select a team to send message:"))
         self.label.setText(_translate("gMessage", "Enter your message:"))
 
-"""
-if __name__ == "__main__":
-    import sys
-    app = QtWidgets.QApplication(sys.argv)
-    gMessage = QtWidgets.QDialog()
-    ui = Ui_gMessage()
-    ui.setupUi(gMessage)
-    gMessage.show()
-    sys.exit(app.exec_())
-"""
+    def clickedGmHistory(self):
+        Dialog = QtWidgets.QDialog()
+        ui = Ui_gmHistory()
+        ui.setupUi(Dialog)
+        Dialog.show()
+        Dialog.exec_() 
+    def clickedSend(self):
+        msg=self.plainTextEdit.document().toPlainText()
+        print(msg)
+        # teamname=
+        # sendGM(msg,teamname)
+    # dropdownbox get teamname first
+
+    # def listAllParticipant(self):
+    #     self.tableWidget.clear()
+    #     self.tableWidget.setRowCount(0)
+    #     result = listAllParticipant()
+
+    #     for i in range(len(result)):
+    #         numRows = self.tableWidget.rowCount()
+    #         self.tableWidget.insertRow(numRows)
+    #         for j in range(len(result[i])):
+    #             self.tableWidget.setItem(numRows, j, QtWidgets.QTableWidgetItem(result[i][j]))
+    # 这个要改成list all team?
+    # 也要加上
+
+# if __name__ == "__main__":
+#     import sys
+#     app = QtWidgets.QApplication(sys.argv)
+#     gMessage = QtWidgets.QDialog()
+#     ui = Ui_gMessage()
+#     ui.setupUi(gMessage)
+#     gMessage.show()
+#     sys.exit(app.exec_())
+

@@ -41,14 +41,13 @@ class Ui_pmHistory(object):
         item = self.tableWidget.horizontalHeaderItem(2)
         item.setText(_translate("pmHistory", "Message"))
 
-"""
-if __name__ == "__main__":
-    import sys
-    app = QtWidgets.QApplication(sys.argv)
-    pmHistory = QtWidgets.QDialog()
-    ui = Ui_pmHistory()
-    ui.setupUi(pmHistory)
-    pmHistory.show()
-    sys.exit(app.exec_())
 
-"""
+# if __name__ == "__main__":
+#     import sys
+#     app = QtWidgets.QApplication(sys.argv)
+#     pmHistory = QtWidgets.QDialog()
+#     ui = Ui_pmHistory()
+#     ui.setupUi(pmHistory)
+#     pmHistory.show()
+#     sys.exit(app.exec_())
+

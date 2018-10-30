@@ -7,7 +7,8 @@
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-
+from pmHistory import *
+# from control import *
 class Ui_pMessage(object):
     def setupUi(self, pMessage):
         pMessage.setObjectName("pMessage")
@@ -37,6 +38,13 @@ class Ui_pMessage(object):
         self.retranslateUi(pMessage)
         QtCore.QMetaObject.connectSlotsByName(pMessage)
 
+        # ui connect 
+        self.pushButton.clicked.connect(self.clickedSend)
+        self.pushButton_2.clicked.connect(self.clickedPmHistory)
+
+
+
+        
     def retranslateUi(self, pMessage):
         _translate = QtCore.QCoreApplication.translate
         pMessage.setWindowTitle(_translate("pMessage", "Personal Message"))
@@ -45,13 +53,36 @@ class Ui_pMessage(object):
         self.label.setText(_translate("pMessage", "Enter your message:"))
         self.label_2.setText(_translate("pMessage", "Select a person to send message:"))
 
-"""
-if __name__ == "__main__":
-    import sys
-    app = QtWidgets.QApplication(sys.argv)
-    pMessage = QtWidgets.QDialog()
-    ui = Ui_pMessage()
-    ui.setupUi(pMessage)
-    pMessage.show()
-    sys.exit(app.exec_())
-"""
+    def clickedSend(self):
+        msg=self.plainTextEdit.document().toPlainText()
+        print(msg)
+
+    def clickedPmHistory(self):
+        Dialog = QtWidgets.QDialog()
+        ui = Ui_pmHistory()
+        ui.setupUi(Dialog)
+        Dialog.show()
+        Dialog.exec_()
+
+    # def listAllParticipant(self):
+    #     self.tableWidget.clear()
+    #     self.tableWidget.setRowCount(0)
+    #     result = listAllParticipant()
+
+    #     for i in range(len(result)):
+    #         numRows = self.tableWidget.rowCount()
+    #         self.tableWidget.insertRow(numRows)
+    #         for j in range(len(result[i])):
+    #             self.tableWidget.setItem(numRows, j, QtWidgets.QTableWidgetItem(result[i][j]))
+    # 需要改成combo box？
+
+
+# if __name__ == "__main__":
+#     import sys
+#     app = QtWidgets.QApplication(sys.argv)
+#     pMessage = QtWidgets.QDialog()
+#     ui = Ui_pMessage()
+#     ui.setupUi(pMessage)
+#     pMessage.show()
+#     sys.exit(app.exec_())
+

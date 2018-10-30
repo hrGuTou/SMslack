@@ -8,10 +8,24 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QTableWidget
-
-from control import *
+import os
 import sys
+# from inspect import getsourcefile
+# current_path = os.path.abspath(getsourcefile(lambda:0))
+# current_dir = os.path.dirname(current_path)
+# parent_dir = current_dir[:current_dir.rfind(os.path.sep)]
 
+# sys.path.insert(0, parent_dir)
+
+
+
+# sys.path.append('..')
+# from control import *
+
+from announce import Ui_Announce
+from explode import Ui_Explode
+from gMessage import Ui_gMessage
+from pMessage import Ui_pMessage
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -72,12 +86,18 @@ class Ui_MainWindow(object):
         self.statusbar.setObjectName("statusbar")
         MainWindow.setStatusBar(self.statusbar)
 
-        self.refresh.clicked.connect(self.listAllParticipant)
-        self.endEvent.clicked.connect(self.explode)
+        
+        # self.endEvent.clicked.connect(self.explode)
 
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
+        # UI 连接
+        self.refresh.clicked.connect(self.clickedRefresh)
+        self.announcement.clicked.connect(self.clickedAnnounce)
+        self.endEvent.clicked.connect(self.clickedEnd)
+        self.pMessage.clicked.connect(self.clickedpMessage)
+        self.gMessage.clicked.connect(self.clickedgMessage)
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "Smslack"))
@@ -100,10 +120,12 @@ class Ui_MainWindow(object):
         self.refresh.setText(_translate("MainWindow", "Refresh"))
 
 
-    def listAllParticipant(self):
+    def clickedRefresh(self):
         self.tableWidget.clear()
         self.tableWidget.setRowCount(0)
         result = listAllParticipant()
+        # listAllParticipant()会有函数重复问题?这里def的最好改一下名字吧?
+        # 改成了clickedRefresh
 
         for i in range(len(result)):
             numRows = self.tableWidget.rowCount()
@@ -111,7 +133,36 @@ class Ui_MainWindow(object):
             for j in range(len(result[i])):
                 self.tableWidget.setItem(numRows, j, QtWidgets.QTableWidgetItem(result[i][j]))
 
+    def clickedAnnounce(self):
+        Dialog = QtWidgets.QDialog()
+        ui = Ui_Announce()
+        ui.setupUi(Dialog)
+        Dialog.show()
+        Dialog.exec_()
 
+    def clickedEnd(self):
+        Dialog = QtWidgets.QDialog()
+        ui = Ui_Explode()
+        ui.setupUi(Dialog)
+        Dialog.show()
+        Dialog.exec_()
+
+    def clickedgMessage(self):
+        gMessage = QtWidgets.QDialog()
+        ui = Ui_gMessage()
+        ui.setupUi(gMessage)
+        gMessage.show()
+        gMessage.exec_()
+
+    def clickedpMessage(self):
+        pMessage = QtWidgets.QDialog()
+        ui = Ui_pMessage()
+        ui.setupUi(pMessage)
+        pMessage.show()
+        pMessage.exec_()
+    
+    
+    
 
 def pyqt_function():
     app = QtWidgets.QApplication(sys.argv)
@@ -122,6 +173,6 @@ def pyqt_function():
     sys.exit(app.exec_())
 
 if __name__ == "__main__":
-    start()
+    # start()
     pyqt_function()
 
