@@ -1,7 +1,8 @@
 from flask import Flask, request
 from twilio.twiml.messaging_response import MessagingResponse
-from Parser import *
+from parser import *
 from database import *
+import threading
 
 
 def infoParser(info, num):
@@ -49,7 +50,10 @@ def startApp():
                 infoParser(msg, num)
             return "OK"
 
-    return app
+    app_thread = threading.Thread(target=app.run)
+    app_thread.daemon = True
+    app_thread.start()
+
 
 listofNum = []
 

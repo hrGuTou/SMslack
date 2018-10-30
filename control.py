@@ -1,6 +1,7 @@
 from twilio.rest import Client
 from time import strftime, localtime
-from main import *
+from mainApp import *
+
 
 account_sid = ""#HIDDEN
 token = ""#HIDDEN
@@ -34,12 +35,11 @@ cur = db.cursor()
 def start():
     """
         Call this function to start app
-        Input: event name in string
         No return
     """
-    app = startApp()
+    startApp()
     makeTable()
-    app.run()
+    #print("hi")
 
 
 def listAllParticipant():
@@ -270,6 +270,3 @@ def explode():
 
     cur.execute("DROP DATABASE on9db")
     db.commit()
-
-
-start('336')
