@@ -147,6 +147,7 @@ def sendPM(message,participantList):
 
 
 def sendGM(message,teamName):
+
     """
         Send message to one team's all members
 
@@ -177,6 +178,7 @@ def sendGM(message,teamName):
 
 
 def sendAnnouncement(message):
+    print(message)
     """
         Make announcement to all participants in the database
 
@@ -185,6 +187,7 @@ def sendAnnouncement(message):
         Store sent messages into database for record
         No return
     """
+    
     cur.execute("SELECT PhoneNumber FROM Participant")
     allPhoneNumber = [item[0] for item in cur.fetchall()]
 
@@ -201,6 +204,7 @@ def sendAnnouncement(message):
     val = (sentTime, message)
     cur.execute(sql,val)
     db.commit()
+
 
 def pmHistory():
     """
@@ -268,5 +272,8 @@ def explode():
 
     """
 
-    cur.execute("DROP DATABASE on9db")
+    cur.execute("DROP DATABASE on9db;")
     db.commit()
+    cur.execute("CREATE DATABASE on9db;")
+    db.commit()
+    cur.execute("USE on9db;")
