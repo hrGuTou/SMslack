@@ -13,7 +13,7 @@ Copy generated http link and paste it into your Twilio SMS webhook.<br />
 # Usage
 Enter Twilio api (account_sid and token) infomation in control.py<br />
 Start app at /gui/main.py<br />
-All control functions located in control.py<br />
+All control functions located in control.py. Modify if needed.<br />
 
 # Database Tables
 1.Announcement<br />
