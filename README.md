@@ -22,3 +22,8 @@ All control functions located in control.py<br />
 # TODO
 1.Fix possible bugs and check inputs<br />
 2.Rewrite in Express.js and React<br />
+
+# Group Members
+Haoran He<br />
+Qizhi Zhao<br />
+YanFeng Lin<br />
