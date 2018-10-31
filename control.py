@@ -5,7 +5,7 @@ from mainApp import *
 
 account_sid = ""#HIDDEN
 token = ""#HIDDEN
-#client = Client(account_sid,token)
+client = Client(account_sid,token)
 f = '%Y-%m-%d %H:%M:%S'
 
 """
