@@ -11,7 +11,7 @@ Enter Twilio api (account_sid and token) infomation in control.py<br />
 Start app at /gui/main.py<br />
 All control functions located in control.py<br />
 
-# Database tables
+# Database Tables
 1.Announcement<br />
 2.GroupMsg<br />
 3.Participant<br />
