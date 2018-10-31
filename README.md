@@ -11,8 +11,10 @@ $ ngrok http FLASK_RUNNING_PORT -host-header="localhost:FLASK_RUNNING_PORT"<br /
 Copy generated http link and paste it into your Twilio SMS webhook.<br />
 
 # Usage
-Enter Twilio api (account_sid and token) infomation in control.py<br />
+Enter Twilio api (account_sid and token) information and Twilio phone number in control.py<br />
+Fill in database information.<br />
 Start app at /gui/main.py<br />
+
 All control functions located in control.py. Modify if needed.<br />
 
 # Database Tables
