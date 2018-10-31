@@ -20,7 +20,7 @@ def infoParser(info, num):
 
 def greeting(res, eventName):
     res.message("Welcome to " + eventName + "! Please copy&paste the following message to fill in and reply. "
-                                            "(Keep exact format)")
+                                            "(KEEP EXACT FORMAT)")
     res.message("[INFO]\n"
                 "Name(first last):\n"
                 "Email:\n"

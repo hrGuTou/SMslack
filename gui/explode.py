@@ -38,6 +38,7 @@ class Ui_Explode(object):
         _translate = QtCore.QCoreApplication.translate
         Dialog.setWindowTitle(_translate("Dialog", "End Event"))
         self.label.setText(_translate("Dialog", "Are you sure you want to Delete all the data for this event?"))
+
     def comfirmEnd(self):
         control.explode()
 

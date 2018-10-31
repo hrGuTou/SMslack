@@ -125,9 +125,11 @@ class Ui_MainWindow(object):
 
 
     def clickedRefresh(self):
-        print("hit")
+        #print("hit")
+        #print(listAllParticipant())
+
         try:
-            self.tableWidget.clearContents()
+            #self.tableWidget.clearContents()
             self.tableWidget.setRowCount(0)
             result = listAllParticipant()
 

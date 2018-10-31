@@ -3,8 +3,8 @@ from time import strftime, localtime
 from mainApp import *
 
 
-account_sid = ""#HIDDEN
-token = ""#HIDDEN
+account_sid = "AC6518969ac0d71c98384e59b96e7815c4"#HIDDEN
+token = "0deddc66b51efd0b2ac3801dcdadc63e"#HIDDEN
 client = Client(account_sid,token)
 f = '%Y-%m-%d %H:%M:%S'
 
@@ -39,8 +39,6 @@ def start():
     """
     startApp()
     makeTable()
-    #print("hi")
-
 
 def listAllParticipant():
     """
@@ -50,6 +48,7 @@ def listAllParticipant():
     """
     cur.execute("Select Name,Email,PhoneNumber,Sex,TeamName,ProjectName from Participant natural join Team "
                 "natural join Project;")
+    db.commit()
     result = []
     for row in cur.fetchall():
         result.append(list(row))
@@ -60,8 +59,13 @@ def names():
     """
         Return all participants' name
     """
-    cur.execute("SELECT Name FROM Participant")
-    return [item[0] for item in cur.fetchall()]
+    try:
+        cur.execute("SELECT Name FROM Participant")
+        db.commit()
+
+        return [item[0] for item in cur.fetchall()]
+    except Exception as e:
+        print(e)
 
 def listAllTeam():
     """
@@ -70,15 +74,25 @@ def listAllTeam():
         Format will be {TeamName, MeetTime}
         MeetTime contains time format YYYY-MM-DD HH:MM:SS that indicates when team will have a meeting
     """
-    cur.execute("SELECT TeamName,MeetTime FROM Team")
-    return [item[0] for item in cur.fetchall()]
+    try:
+        cur.execute("SELECT TeamName,MeetTime FROM Team")
+        db.commit()
+
+        return [item[0] for item in cur.fetchall()]
+    except Exception as e:
+        print(e)
 
 def teams():
     """
         Return all the team name
     """
-    cur.execute("SELECT TeamName FROM Team")
-    return [item[0] for item in cur.fetchall()]
+    try:
+        cur.execute("SELECT TeamName FROM Team")
+        db.commit()
+
+        return [item[0] for item in cur.fetchall()]
+    except Exception as e:
+        print(e)
 
 def listAllProject():
     """
@@ -90,6 +104,8 @@ def listAllProject():
         ProjectDue contains time format YYYY-MM-DD HH:MM:SS that indicate when project is due. To be assign by event organizer.
     """
     cur.execute("SELECT ProjectName,ProjectStatus,ProjectDue FROM Project")
+    db.commit()
+
     return [item[0] for item in cur.fetchall()]
 
 def assignProjectDue(time, projectname):
@@ -126,6 +142,8 @@ def sendPM(message,participantList):
     numberTO = []
     for name in participantList:
         cur.execute("SELECT PhoneNumber FROM Participant WHERE Name='"+name+"';")
+        db.commit()
+
         phoneNum = str(cur.fetchone()[0])
         numberTO.append(phoneNum)
 
@@ -160,6 +178,8 @@ def sendGM(message,teamName):
     """
 
     cur.execute("SELECT PhoneNumber FROM Team NATURAL JOIN Participant WHERE TeamName = '"+teamName+"';")
+    db.commit()
+
     allPhoneNumber = [item[0] for item in cur.fetchall()]
 
     for number in allPhoneNumber:
@@ -189,6 +209,7 @@ def sendAnnouncement(message):
     """
     
     cur.execute("SELECT PhoneNumber FROM Participant")
+    db.commit()
     allPhoneNumber = [item[0] for item in cur.fetchall()]
 
     for number in allPhoneNumber:
@@ -214,17 +235,21 @@ def pmHistory():
                 Format will be [Name, Sent Time, Message]
 
     """
+    try:
+        cur.execute("select SentToPerson, SentTime, Message from PrivateMsg;")
+        db.commit()
 
-    cur.execute("select SentToPerson, SentTime, Message from PrivateMsg;")
-    result = []
-    for row in cur.fetchall():
-        result.append(list(row))
+        result = []
+        for row in cur.fetchall():
+            result.append(list(row))
 
-    for data in result:
-        date = data[1]
-        data[1]=date.strftime(f)
+        for data in result:
+            date = data[1]
+            data[1]=date.strftime(f)
 
-    return result
+        return result
+    except Exception as e:
+        print(e)
 
 def gmHistory():
     """
@@ -234,16 +259,21 @@ def gmHistory():
             Format will be [Team Name, Sent Time, Message]
 
     """
-    cur.execute("select SentToTeam, SentTime, Message from GroupMsg;")
-    result = []
-    for row in cur.fetchall():
-        result.append(list(row))
+    try:
+        cur.execute("select SentToTeam, SentTime, Message from GroupMsg;")
+        db.commit()
 
-    for data in result:
-        date = data[1]
-        data[1] = date.strftime(f)
+        result = []
+        for row in cur.fetchall():
+            result.append(list(row))
 
-    return result
+        for data in result:
+            date = data[1]
+            data[1] = date.strftime(f)
+
+        return result
+    except Exception as e:
+        print(e)
 
 def amHistory():
     """
@@ -253,16 +283,21 @@ def amHistory():
                 Format will be [Sent Time, Message]
 
     """
-    cur.execute("SELECT SentTime, Message FROM Announcement;")
-    result = []
-    for row in cur.fetchall():
-        result.append(list(row))
+    try:
+        cur.execute("SELECT SentTime, Message FROM Announcement;")
+        db.commit()
 
-    for data in result:
-        date = data[0]
-        data[0]=date.strftime(f)
+        result = []
+        for row in cur.fetchall():
+            result.append(list(row))
 
-    return result
+        for data in result:
+            date = data[0]
+            data[0]=date.strftime(f)
+
+        return result
+    except Exception as e:
+        print(e)
 
 def explode():
     """
@@ -277,3 +312,8 @@ def explode():
     cur.execute("CREATE DATABASE on9db;")
     db.commit()
     cur.execute("USE on9db;")
+    db.commit()
+    makeTable()
+
+    print("DB reset")
+

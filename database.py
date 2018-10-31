@@ -15,7 +15,7 @@ cur = db.cursor()
 def makeTable():
     try:
         participant = "CREATE TABLE IF NOT EXISTS Participant(id INT PRIMARY KEY AUTO_INCREMENT," \
-                      "Name TEXT NOT NULL," \
+                      "Name VARCHAR(320) NOT NULL," \
                       "Email VARCHAR(320) NOT NULL," \
                       "PhoneNumber VARCHAR(12) NOT NULL," \
                       "Sex CHAR(1) NOT NULL," \

@@ -16,7 +16,7 @@ def dataParser(data):
     f_proStat = data.rfind(projectStat)
 
     nLoc = f_name + len(name)
-    emLoc = f_email + len(email) + 1
+    emLoc = f_email + len(email)
     sLoc = f_sex + len(sex)
     tLoc = f_teamID + len(teamID)
     pnLoc = f_proName + len(projectName)
