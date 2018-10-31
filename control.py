@@ -3,9 +3,10 @@ from time import strftime, localtime
 from mainApp import *
 
 
-account_sid = "AC6518969ac0d71c98384e59b96e7815c4"#HIDDEN
-token = "0deddc66b51efd0b2ac3801dcdadc63e"#HIDDEN
+account_sid = ""#HIDDEN
+token = ""#HIDDEN
 client = Client(account_sid,token)
+twilioPhoneNumber = "" #insert your twilio phone number here
 f = '%Y-%m-%d %H:%M:%S'
 
 """
@@ -26,9 +27,9 @@ f = '%Y-%m-%d %H:%M:%S'
 
 db = MySQLdb.connect(
     host="localhost",
-    user="GuTou", #change it to your username
+    user="", #change it to your username
     #passwd="" if needed
-    db='on9db'
+    db='on9db' #change it to your database
 )
 cur = db.cursor()
 
@@ -150,7 +151,7 @@ def sendPM(message,participantList):
     for number in numberTO:
         client.messages.create(
             body=message,
-            from_='+12017209126',
+            from_= twilioPhoneNumber,
             to=number
         )
 
@@ -185,7 +186,7 @@ def sendGM(message,teamName):
     for number in allPhoneNumber:
         client.messages.create(
             body = message,
-            from_= '+12017209126',
+            from_= twilioPhoneNumber,
             to = number
         )
 
@@ -215,7 +216,7 @@ def sendAnnouncement(message):
     for number in allPhoneNumber:
         client.messages.create(
             body = message,
-            from_= '+12017209126',
+            from_= twilioPhoneNumber,
             to = number
         )
 
