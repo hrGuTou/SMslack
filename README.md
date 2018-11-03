@@ -7,7 +7,7 @@ Have Twilio account ready.<br />
 Install ngrok or alternative services to expose localhost.<br />
 <br />
 For ngrok, use the following command in terminal to start:<br />
-$ ngrok http FLASK_RUNNING_PORT -host-header="localhost:FLASK_RUNNING_PORT"<br />
+`$ ngrok http FLASK_RUNNING_PORT -host-header="localhost:FLASK_RUNNING_PORT"`<br />
 Copy generated http link and paste it into your Twilio SMS webhook.<br />
 
 # Usage
