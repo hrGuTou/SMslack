@@ -1,6 +1,7 @@
 from twilio.rest import Client
 from time import strftime, localtime
 from mainApp import *
+import database
 
 
 account_sid = ""#HIDDEN
@@ -25,13 +26,6 @@ f = '%Y-%m-%d %H:%M:%S'
     Create database named on9db using CREATE DATABASE on9db;
 """
 
-db = MySQLdb.connect(
-    host="localhost",
-    user="", #change it to your username
-    #passwd="" if needed
-    db='on9db' #change it to your database
-)
-cur = db.cursor()
 
 def start():
     """
@@ -39,7 +33,6 @@ def start():
         No return
     """
     startApp()
-    makeTable()
 
 def listAllParticipant():
     """
@@ -47,51 +40,41 @@ def listAllParticipant():
         This function return the list of lists of all participants
         Format will be [Name, Email, PhoneNumber, Sex, TeamName, ProjectName]
     """
-    cur.execute("Select Name,Email,PhoneNumber,Sex,TeamName,ProjectName from Participant natural join Team "
-                "natural join Project;")
-    db.commit()
+    ref = user.get()
     result = []
-    for row in cur.fetchall():
-        result.append(list(row))
-
+    for key in ref:
+        result.append([ref[key]["Name"],ref[key]["Email"],ref[key]["Phone Number"],ref[key]["Sex"],ref[key]["Team Name"],ref[key]["Project Name"]])
+    print(result)
     return result
+
 
 def names():
     """
         Return all participants' name
     """
-    try:
-        cur.execute("SELECT Name FROM Participant")
-        db.commit()
 
-        return [item[0] for item in cur.fetchall()]
+    try:
+        ref = user.get()
+        result = []
+        for key in ref:
+            result.append(ref[key]["Name"])
+        return result
+
     except Exception as e:
         print(e)
 
-def listAllTeam():
-    """
-        ALL DATA UNSORTED
-        Return a list of all teams information
-        Format will be {TeamName, MeetTime}
-        MeetTime contains time format YYYY-MM-DD HH:MM:SS that indicates when team will have a meeting
-    """
-    try:
-        cur.execute("SELECT TeamName,MeetTime FROM Team")
-        db.commit()
 
-        return [item[0] for item in cur.fetchall()]
-    except Exception as e:
-        print(e)
 
 def teams():
     """
         Return all the team name
     """
     try:
-        cur.execute("SELECT TeamName FROM Team")
-        db.commit()
-
-        return [item[0] for item in cur.fetchall()]
+        ref = user.get()
+        result = []
+        for key in ref:
+            result.append(ref[key]["Team Name"])
+        return set(result)
     except Exception as e:
         print(e)
 
@@ -104,10 +87,17 @@ def listAllProject():
         For ProjectStatus, C for completed, I for Incomplete
         ProjectDue contains time format YYYY-MM-DD HH:MM:SS that indicate when project is due. To be assign by event organizer.
     """
-    cur.execute("SELECT ProjectName,ProjectStatus,ProjectDue FROM Project")
-    db.commit()
 
-    return [item[0] for item in cur.fetchall()]
+    try:
+        ref = user.get()
+        result = []
+        for key in ref:
+            result.append([ref[key]["Project Name"],ref[key]["Project Status"]])
+
+        return result
+
+    except Exception as e:
+        print(e)
 
 def assignProjectDue(time, projectname):
     """
@@ -120,10 +110,10 @@ def assignProjectDue(time, projectname):
 
         #TODO: check input
     """
+    pass
 
-
-    cur.execute("UPDATE Project SET ProjectDue = '"+time+"' WHERE ProjectName = '"+projectname+"'; ")
-    db.commit()
+    #cur.execute("UPDATE Project SET ProjectDue = '"+time+"' WHERE ProjectName = '"+projectname+"'; ")
+    #db.commit()
 
 
 def sendPM(message,participantList):
@@ -140,30 +130,28 @@ def sendPM(message,participantList):
 
         #TODO: list data type check
     """
-    numberTO = []
-    for name in participantList:
-        cur.execute("SELECT PhoneNumber FROM Participant WHERE Name='"+name+"';")
-        db.commit()
+    try:
+        numberTO = []
+        for name in participantList:
+            ref = user.order_by_child("Name").equal_to(name).get()
+            for key in ref:
+                numberTO.append(ref[key]["Phone Number"])
 
-        phoneNum = str(cur.fetchone()[0])
-        numberTO.append(phoneNum)
+        for number in numberTO:
+            client.messages.create(
+                body=message,
+                from_= twilioPhoneNumber,
+                to=number
+            )
 
-    for number in numberTO:
-        client.messages.create(
-            body=message,
-            from_= twilioPhoneNumber,
-            to=number
-        )
+        sentTime = strftime("%Y-%m-%d %H:%M:%S", localtime())
 
-    sentTime = strftime("%Y-%m-%d %H:%M:%S", localtime())
-
-    for name in participantList:
-        sql = "INSERT INTO PrivateMsg(SentToPerson, SentTime, Message) VALUES (%s,%s,%s);"
-        val = (name, sentTime, message)
-        cur.execute(sql, val)
-        db.commit()
-
-
+        for number in numberTO:
+            user.child(number).child("Message History/Personal").update({
+                sentTime:message
+            })
+    except Exception as e:
+        print(e)
 
 def sendGM(message,teamName):
 
@@ -177,29 +165,31 @@ def sendGM(message,teamName):
         Store sent messages into database for record
         No return
     """
+    try:
+        numberTO = []
+        ref = user.order_by_child("Team Name").equal_to(teamName).get()
+        for key in ref:
+            numberTO.append(ref[key]["Phone Number"])
 
-    cur.execute("SELECT PhoneNumber FROM Team NATURAL JOIN Participant WHERE TeamName = '"+teamName+"';")
-    db.commit()
 
-    allPhoneNumber = [item[0] for item in cur.fetchall()]
+        for number in numberTO:
+            client.messages.create(
+                body = message,
+                from_= twilioPhoneNumber,
+                to = number
+            )
 
-    for number in allPhoneNumber:
-        client.messages.create(
-            body = message,
-            from_= twilioPhoneNumber,
-            to = number
-        )
+        sentTime = strftime("%Y-%m-%d %H:%M:%S", localtime())
 
-    sentTime = strftime("%Y-%m-%d %H:%M:%S", localtime())
+        database.message.child("Group Message").child(teamName).update({
+            sentTime:message
+        })
 
-    sql = "INSERT INTO GroupMsg(SentToTeam, SentTime, Message) VALUES (%s,%s,%s);"
-    val = (teamName,sentTime, message)
-    cur.execute(sql, val)
-    db.commit()
+    except Exception as e:
+        print(e)
 
 
 def sendAnnouncement(message):
-    print(message)
     """
         Make announcement to all participants in the database
 
@@ -208,12 +198,13 @@ def sendAnnouncement(message):
         Store sent messages into database for record
         No return
     """
-    
-    cur.execute("SELECT PhoneNumber FROM Participant")
-    db.commit()
-    allPhoneNumber = [item[0] for item in cur.fetchall()]
+    numberTO = []
+    ref = user.get()
+    for key in ref:
+        numberTO.append(ref[key]["Phone Number"])
 
-    for number in allPhoneNumber:
+
+    for number in numberTO:
         client.messages.create(
             body = message,
             from_= twilioPhoneNumber,
@@ -222,11 +213,9 @@ def sendAnnouncement(message):
 
     sentTime = strftime("%Y-%m-%d %H:%M:%S", localtime())
 
-    sql = "INSERT INTO Announcement(SentTime, Message) VALUES (%s,%s);"
-    val = (sentTime, message)
-    cur.execute(sql,val)
-    db.commit()
-
+    database.message.child("Announcement").update({
+        sentTime:message
+    })
 
 def pmHistory():
     """
@@ -237,18 +226,17 @@ def pmHistory():
 
     """
     try:
-        cur.execute("select SentToPerson, SentTime, Message from PrivateMsg;")
-        db.commit()
-
         result = []
-        for row in cur.fetchall():
-            result.append(list(row))
 
-        for data in result:
-            date = data[1]
-            data[1]=date.strftime(f)
+        ref = user.get()
+        for key in ref:
+            if "Message History" in ref[key]:
+                if "Personal" in ref[key]["Message History"]:
+                    for senttime in ref[key]["Message History"]["Personal"]:
+                        result.append([ref[key]["Name"], senttime, ref[key]["Message History"]["Personal"][senttime]])
 
         return result
+
     except Exception as e:
         print(e)
 
@@ -261,18 +249,14 @@ def gmHistory():
 
     """
     try:
-        cur.execute("select SentToTeam, SentTime, Message from GroupMsg;")
-        db.commit()
-
         result = []
-        for row in cur.fetchall():
-            result.append(list(row))
+        ref = database.message.child("Group Message").get()
+        #print(ref)
+        for key in ref:
+            for time in ref[key]:
+                result.append([key, time, ref[key][time]])
 
-        for data in result:
-            date = data[1]
-            data[1] = date.strftime(f)
-
-        return result
+        return (result)
     except Exception as e:
         print(e)
 
@@ -285,17 +269,10 @@ def amHistory():
 
     """
     try:
-        cur.execute("SELECT SentTime, Message FROM Announcement;")
-        db.commit()
-
+        ref = database.message.child("Announcement").get()
         result = []
-        for row in cur.fetchall():
-            result.append(list(row))
-
-        for data in result:
-            date = data[0]
-            data[0]=date.strftime(f)
-
+        for key in ref:
+            result.append([key,ref[key]])
         return result
     except Exception as e:
         print(e)
@@ -307,14 +284,11 @@ def explode():
                  Deletion can't be undone.
 
     """
+    user.delete()
+    message.delete()
 
-    cur.execute("DROP DATABASE on9db;")
-    db.commit()
-    cur.execute("CREATE DATABASE on9db;")
-    db.commit()
-    cur.execute("USE on9db;")
-    db.commit()
-    makeTable()
 
     print("DB reset")
 
+if __name__ == "__main__":
+    pass

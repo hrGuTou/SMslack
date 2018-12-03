@@ -3,6 +3,7 @@ from twilio.twiml.messaging_response import MessagingResponse
 from parser import *
 from database import *
 import threading
+import flask_ngrok
 
 
 def infoParser(info, num):
@@ -50,15 +51,18 @@ def startApp():
                 infoParser(msg, num)
             return "OK"
 
+    #app.run()
+
+
     app_thread = threading.Thread(target=app.run)
     app_thread.daemon = True
     app_thread.start()
 
-
 listofNum = []
 
 
-#if __name__ == '__main__':
+if __name__ == '__main__':
+    startApp()
 #    listofNum = []
 #    eventName = input("Event Name: ")
 #    app = startApp(eventName)

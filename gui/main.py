@@ -126,7 +126,6 @@ class Ui_MainWindow(object):
 
     def clickedRefresh(self):
         #print("hit")
-        #print(listAllParticipant())
 
         try:
             #self.tableWidget.clearContents()
@@ -188,6 +187,6 @@ def pyqt_function():
     sys.exit(app.exec_())
 
 if __name__ == "__main__":
-    start()
-    pyqt_function()
+    start() #BE
+    pyqt_function() #UI
 
