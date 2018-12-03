@@ -2,6 +2,12 @@
 This project used MYSQL database and Twilio sms API to build a platform mainly for event organizers to send out notifications and announcements via SMS.
 
 # Environment Setup
+### Master branch ###
+Using Firebase Database<br />
+Sign up then download your certificate json file from Firebase and place it in `/Firebase_cred` folder.<br />
+Modify `Firebase_cred.py` to include your json path and database url.<br />
+
+### MySQL_database branch ###
 Install MYSQL for database management.<br />
 Have Twilio account ready.<br />
 Install ngrok or alternative services to expose localhost.<br />
