@@ -42,8 +42,9 @@ def listAllParticipant():
     """
     ref = user.get()
     result = []
-    for key in ref:
-        result.append([ref[key]["Name"],ref[key]["Email"],ref[key]["Phone Number"],ref[key]["Sex"],ref[key]["Team Name"],ref[key]["Project Name"]])
+    if ref is not None:
+        for key in ref:
+            result.append([ref[key]["Name"],ref[key]["Email"],ref[key]["Phone Number"],ref[key]["Sex"],ref[key]["Team Name"],ref[key]["Project Name"]])
     print(result)
     return result
 
@@ -56,8 +57,9 @@ def names():
     try:
         ref = user.get()
         result = []
-        for key in ref:
-            result.append(ref[key]["Name"])
+        if ref is not None:
+            for key in ref:
+                result.append(ref[key]["Name"])
         return result
 
     except Exception as e:
@@ -72,8 +74,9 @@ def teams():
     try:
         ref = user.get()
         result = []
-        for key in ref:
-            result.append(ref[key]["Team Name"])
+        if ref is not None:
+            for key in ref:
+                result.append(ref[key]["Team Name"])
         return set(result)
     except Exception as e:
         print(e)
@@ -91,8 +94,9 @@ def listAllProject():
     try:
         ref = user.get()
         result = []
-        for key in ref:
-            result.append([ref[key]["Project Name"],ref[key]["Project Status"]])
+        if ref is not None:
+            for key in ref:
+                result.append([ref[key]["Project Name"],ref[key]["Project Status"]])
 
         return result
 
@@ -229,11 +233,12 @@ def pmHistory():
         result = []
 
         ref = user.get()
-        for key in ref:
-            if "Message History" in ref[key]:
-                if "Personal" in ref[key]["Message History"]:
-                    for senttime in ref[key]["Message History"]["Personal"]:
-                        result.append([ref[key]["Name"], senttime, ref[key]["Message History"]["Personal"][senttime]])
+        if ref is not None:
+            for key in ref:
+                if "Message History" in ref[key]:
+                    if "Personal" in ref[key]["Message History"]:
+                        for senttime in ref[key]["Message History"]["Personal"]:
+                            result.append([ref[key]["Name"], senttime, ref[key]["Message History"]["Personal"][senttime]])
 
         return result
 
@@ -251,10 +256,10 @@ def gmHistory():
     try:
         result = []
         ref = database.message.child("Group Message").get()
-        #print(ref)
-        for key in ref:
-            for time in ref[key]:
-                result.append([key, time, ref[key][time]])
+        if ref is not None:
+            for key in ref:
+                for time in ref[key]:
+                    result.append([key, time, ref[key][time]])
 
         return (result)
     except Exception as e:
@@ -271,8 +276,9 @@ def amHistory():
     try:
         ref = database.message.child("Announcement").get()
         result = []
-        for key in ref:
-            result.append([key,ref[key]])
+        if ref is not None:
+            for key in ref:
+                result.append([key,ref[key]])
         return result
     except Exception as e:
         print(e)
